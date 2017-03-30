@@ -25,7 +25,7 @@ import static org.junit.Assert.fail;
 
 
 /**
- * DropDownMenuTest checks whether the currencies enumerated
+ * Checks whether the currencies enumerated
  * in 'currency-names.csv'are available to choose.
  */
 @RunWith(Parameterized.class)
@@ -94,7 +94,7 @@ public class DropDownMenuTest extends CalcTest {
             converterTo.findElement(By.xpath("./div[@class='visible']/span[contains(text(), '" + currency + "')]")).click();
             assertEquals(converterTo.findElement(By.xpath("./header/strong")).getText(), currency);
         } catch (NoSuchElementException e) {
-            fail();
+            fail("Currency " + currency + " not found");
         }
     }
 }

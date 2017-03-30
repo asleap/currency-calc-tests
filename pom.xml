@@ -66,6 +66,9 @@
                             <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
                         </property>
                     </properties>
+                    <includes>
+                        <include>**/CalcTestSuite.class</include>
+                    </includes>
                 </configuration>
                 <dependencies>
                     <dependency>

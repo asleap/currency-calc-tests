@@ -1,8 +1,10 @@
 package ru.asleap.testing.currencycalc;
 
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import ru.yandex.qatools.allure.annotations.Step;
 
 
@@ -13,9 +15,19 @@ import ru.yandex.qatools.allure.annotations.Step;
 public class WebDriverHelper {
     private WebDriver driver;
     private final String CALC_PAGE_URL = "http://www.sberbank.ru/ru/quotes/converter";
+    private static WebDriverHelper instance = new WebDriverHelper();
 
-    public WebDriverHelper(WebDriver driver) {
-        this.driver = driver;
+    public static WebDriverHelper getInstance() {
+        return instance;
+    }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    private WebDriverHelper() {
+        ChromeDriverManager.getInstance().setup();
+        this.driver = new ChromeDriver();
     }
 
     @Step
@@ -52,7 +64,6 @@ public class WebDriverHelper {
         element.click();
     }
 
-    @Step
     public void quit() {
         driver.quit();
     }
