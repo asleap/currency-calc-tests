@@ -1,15 +1,10 @@
 package ru.asleap.testing.currencycalc;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Parameter;
 
 import java.io.BufferedReader;
@@ -20,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 
@@ -63,38 +57,24 @@ public class DropDownMenuTest extends CalcTest {
         return result;
     }
 
-    @Before
-    public void setUp() {
-        helper.openCalcPage();
-    }
-
     @Test
     public void dropDownMenuTest() {
+        ensureDropdownIsPresent(DROPDWON_FROM_NAME);
+        WebElement dropdownFrom = clickDropdownMenu(DROPDWON_FROM_NAME);
         try {
-            new WebDriverWait(driver, 15).until(
-                    ExpectedConditions.presenceOfElementLocated(
-                            By.xpath("//select[@name='converterFrom']")
-                    ));
-        } catch (TimeoutException e) {
-            fail("Could not load page");
-        }
-
-        WebElement converterFrom = driver.findElement(By.xpath("//select[@name='converterFrom']/../div[@class='select']"));
-        converterFrom.click();
-        try {
-            converterFrom.findElement(By.xpath("./div[@class='visible']/span[contains(text(), '" + currency + "')]")).click();
-            assertEquals(converterFrom.findElement(By.xpath("./header/strong")).getText(), currency);
+            chooseCurrency(currency, dropdownFrom);
         } catch (NoSuchElementException e) {
-            fail("Currency " + currency + " not found");
+            fail("Cannot find currency span: " + currency);
         }
+        assertCurrencyIn(currency, dropdownFrom);
 
-        WebElement converterTo = driver.findElement(By.xpath("//select[@name='converterTo']/../div[@class='select']"));
-        converterTo.click();
+        ensureDropdownIsPresent(DROPDOWN_TO_NAME);
+        WebElement dropdownTo = clickDropdownMenu(DROPDOWN_TO_NAME);
         try {
-            converterTo.findElement(By.xpath("./div[@class='visible']/span[contains(text(), '" + currency + "')]")).click();
-            assertEquals(converterTo.findElement(By.xpath("./header/strong")).getText(), currency);
+            chooseCurrency(currency, dropdownTo);
         } catch (NoSuchElementException e) {
-            fail("Currency " + currency + " not found");
+            fail("Cannot find currency span: " + currency);
         }
+        assertCurrencyIn(currency, dropdownTo);
     }
 }
