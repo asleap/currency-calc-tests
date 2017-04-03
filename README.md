@@ -5,7 +5,7 @@ Written using JUnit 4, Selenium and Yandex.Allure.
 Requirements: maven and Chrome browser.
 
 Manual:
-- Clone project and cd to the project derictory.
+- Clone project and cd to the project directory.
 - Run `mvn clean test` to start testing. An instance of Chrome browser will be launched.
-- Run `mvn site` to generate Allure report
+- Run `mvn site` to generate Allure report.
 - Run `mvn jetty:run` to start Jetty and go to http://localhost:8080 to check the report.
